@@ -1,0 +1,26 @@
+<annotation>
+	<folder>img-pror</folder>
+	<filename>00913.jpg</filename>
+	<path>C:\Users\beda2\Desktop\img-pror\00913.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>737</width>
+		<height>400</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>5.16.2</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>77</xmin>
+			<ymin>11</ymin>
+			<xmax>468</xmax>
+			<ymax>400</ymax>
+		</bndbox>
+	</object>
+</annotation>

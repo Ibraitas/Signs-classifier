@@ -1,0 +1,26 @@
+<annotation>
+	<folder>zaprznaki</folder>
+	<filename>00217.jpg</filename>
+	<path>D:\kiryl\zaprznaki\00217.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>600</width>
+		<height>400</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>1.31.3</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>268</xmin>
+			<ymin>187</ymin>
+			<xmax>356</xmax>
+			<ymax>211</ymax>
+		</bndbox>
+	</object>
+</annotation>
