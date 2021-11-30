@@ -1,9 +1,17 @@
 import React from "react";
+import signsObjects from "./signsObjects";
 
 class SignList extends React.Component {
     render(){
         return (
-            <h1>TEST</h1>
+            <div className="signs-container">
+                { Object.keys(signsObjects).map(sign => (
+                    <div className="sign-info">
+                        <img src={ signsObjects[sign].imgLink } alt={ signsObjects[sign].name }></img>
+                        <p className="sign-name">{ signsObjects[sign].name }</p>
+                    </div>
+                )) }
+            </div>
         )
     }
 }

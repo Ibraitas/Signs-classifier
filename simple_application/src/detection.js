@@ -22,8 +22,17 @@ class Detection extends React.Component {
   videoRef = React.createRef();
   canvasRef = React.createRef();
 
+  componentWillUnmount() {
+    if (window.stream) {
+          window.stream.getTracks().forEach(function(track) {
+            if (track.readyState === 'live' && track.kind === 'video') {
+                track.stop();
+            }
+          });
+    }
+  }
 
-  componentDidMount() { //TODO: Delete "!"
+  componentDidMount() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       const webCamPromise = navigator.mediaDevices
         .getUserMedia({
@@ -50,6 +59,7 @@ class Detection extends React.Component {
         })
         .catch(error => {
           console.error(error);
+          return;
         });
     }
   }
@@ -57,7 +67,11 @@ class Detection extends React.Component {
     detectFrame = (video, model) => {
         tf.engine().startScope();
         model.executeAsync(this.process_input(video)).then(predictions => {
-        this.renderPredictions(predictions, video);
+          try {
+            this.renderPredictions(predictions, video);
+          } catch {
+            return new Error();
+          }
         requestAnimationFrame(() => {
           this.detectFrame(video, model);
         });
@@ -88,7 +102,8 @@ class Detection extends React.Component {
         bbox[3] = maxY - minY;
         detectionObjects.push({
           class: classes[i],
-          label: classesDir[classes[i]].name, //TODO: ADD LINKS
+          label: classesDir[classes[i]].name,
+          link: classesDir[classes[i]].descriptionLink,
           score: score.toFixed(4),
           bbox: bbox
         })
@@ -98,7 +113,12 @@ class Detection extends React.Component {
   }
 
   renderPredictions = predictions => {
-    const ctx = this.canvasRef.current.getContext("2d");
+    let ctx;
+    try {
+      ctx = this.canvasRef.current.getContext("2d");
+    } catch {
+      throw new Error('stop');
+    }
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     // Font options.
@@ -114,7 +134,6 @@ class Detection extends React.Component {
                                     boxes, classes, classesDir);
     this.setState({ detections });
     detections.forEach(item => {
-    console.log(item);
       const x = item['bbox'][0];
       const y = item['bbox'][1];
       const width = item['bbox'][2];
@@ -148,9 +167,9 @@ class Detection extends React.Component {
       <div className="main-container">
         <h1 className="title">Real-Time Object Detection: Signs Classifier</h1>
         <div className="button-container">
-            { detections.map(item => (<button className="sign-link">
-                <a href={ item.label }>{ item.label }</a>
-            </button>)) }
+            { detections.map(item => (
+                <a href={item.link} className="sign-link">More about { item.label }</a>
+            )) }
         </div>
         <div className="video-detect">
             <video

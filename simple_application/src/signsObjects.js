@@ -1,4 +1,4 @@
-export default {
+const signsObjects = {
     1: {
         name: '1.1',
         id: 1,
@@ -225,7 +225,6 @@ export default {
     },
 	57: {
         name: '2.1',
-        sasa: '12c',
         id: 57,
     },
 	58: {
@@ -402,3 +401,13 @@ export default {
     }
 	
 }
+
+Object.keys(signsObjects).map(sign => {
+    return signsObjects[sign].imgLink = `https://pdd.by/img/rules/trfreg-signs/${signsObjects[sign].name}.png`
+});
+
+Object.keys(signsObjects).map(sign => {
+    return signsObjects[sign].descriptionLink = `https://pdd.by/pdd/ru/sign-${signsObjects[sign].name}/`
+});
+
+export default signsObjects;
